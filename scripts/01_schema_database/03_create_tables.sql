@@ -48,47 +48,46 @@ CREATE TABLE Immeuble (
 -- Appartement
 CREATE TABLE Appartement (
     Numero NUMBER,
-    Code VARCHAR2(10) NOT NULL,
+    Immeuble VARCHAR2(10) NOT NULL,
     Superficie NUMBER,
     Nb_Piece NUMBER,
     Niveau NUMBER,
     
     -- Contraintes de table
-    CONSTRAINT pk_appartement PRIMARY KEY (Numero),
+    CONSTRAINT pk_appartement PRIMARY KEY (Numero, Immeuble),
     CONSTRAINT chk_superficie CHECK (Superficie > 0),
     CONSTRAINT chk_piece CHECK (Nb_Piece >= 1),
-    CONSTRAINT fk_appart_immeuble FOREIGN KEY (Code) REFERENCES Immeuble(Code)
-) CLUSTER cluster_code (Code);
+    CONSTRAINT fk_appart_immeuble FOREIGN KEY (Immeuble) REFERENCES Immeuble(code)
+) CLUSTER cluster_code (Immeuble);
 
 -- Appartenir
 CREATE TABLE Appartenir (
-    Code VARCHAR2(10) NOT NULL,
-    CNI VARCHAR2(20) NOT NULL,
+    Immeuble VARCHAR2(10) NOT NULL,
+    Proprietaire VARCHAR2(20) NOT NULL,
     Debut DATE NOT NULL,
     Fin DATE,
     
     -- Contraintes de table
-    CONSTRAINT pk_appartenir PRIMARY KEY (Code, CNI),
-    CONSTRAINT fk_appart_immeuble FOREIGN KEY (Code) REFERENCES Immeuble(Code),
-    CONSTRAINT fk_appart_proprio FOREIGN KEY (CNI) REFERENCES Proprietaire(CNI)
-) CLUSTER cluster_code (Code);
+    CONSTRAINT pk_appartenir PRIMARY KEY (Immeuble, Proprietaire, Debut),
+    CONSTRAINT fk_appart_immeuble FOREIGN KEY (Immeuble) REFERENCES Immeuble(Code),
+    CONSTRAINT fk_appart_proprio FOREIGN KEY (Proprietaire) REFERENCES Proprietaire(CNI)
+) CLUSTER cluster_code (Immeuble);
 
 -- Louer
 CREATE TABLE Louer (
-    NumeroAppartement NUMBER NOT NULL,
-    Code VARCHAR2(10) NOT NULL,
-    NumeroLocataire NUMBER NOT NULL,
+    Appartement NUMBER NOT NULL,
+    Immeuble VARCHAR2(10) NOT NULL,
+    Locataire NUMBER NOT NULL,
     Debut DATE NOT NULL,
     Fin DATE,
     Prix NUMBER(10,2),
     
     -- Contraintes de table
-    CONSTRAINT pk_louer PRIMARY KEY (NumeroAppartement, NumeroLocataire),
+    CONSTRAINT pk_louer PRIMARY KEY (Appartement, Immeuble, Locataire, Debut),
     CONSTRAINT chk_prix CHECK (Prix > 0),
-    CONSTRAINT fk_louer_appartement FOREIGN KEY (NumeroAppartement) REFERENCES Appartement(Numero),
-    CONSTRAINT fk_louer_immeuble FOREIGN KEY (Code) REFERENCES Immeuble(Code),
-    CONSTRAINT fk_louer_locataire FOREIGN KEY (NumeroLocataire) REFERENCES Locataire(Numero)
-) CLUSTER cluster_code (Code);
+    CONSTRAINT fk_louer_appartement FOREIGN KEY (Appartement, Immeuble) REFERENCES Appartement(Numero, Immeuble),
+    CONSTRAINT fk_louer_locataire FOREIGN KEY (Locataire) REFERENCES Locataire(Numero)
+) CLUSTER cluster_code (Immeuble);
 
 -- Agence
 CREATE TABLE Agence (
@@ -103,13 +102,13 @@ CREATE TABLE Agence (
 
 -- Gerer
 CREATE TABLE Gerer (
-    NomAgence VARCHAR2(50) NOT NULL,
-    Code VARCHAR2(10) NOT NULL,
+    Agence VARCHAR2(50) NOT NULL,
+    Immeuble VARCHAR2(10) NOT NULL,
     Debut DATE NOT NULL,
     Fin DATE,
     
     -- Contraintes de table
-    CONSTRAINT pk_gerer PRIMARY KEY (NomAgence, Code),
-    CONSTRAINT fk_gerer_agence FOREIGN KEY (NomAgence) REFERENCES Agence(Nom),
-    CONSTRAINT fk_gerer_immeuble FOREIGN KEY (Code) REFERENCES Immeuble(Code)
-) CLUSTER cluster_code (Code);
+    CONSTRAINT pk_gerer PRIMARY KEY (Agence, Immeuble, Debut),
+    CONSTRAINT fk_gerer_agence FOREIGN KEY (Agence) REFERENCES Agence(Nom),
+    CONSTRAINT fk_gerer_immeuble FOREIGN KEY (Immeuble) REFERENCES Immeuble(Code)
+) CLUSTER cluster_code (Immeuble);
