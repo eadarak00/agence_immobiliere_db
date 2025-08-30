@@ -2,7 +2,7 @@
 CONNECT sys/Admin#2025 AS SYSDBA;
 
 -- Création du tablespace
-CREATE TABLESPACE AGENCE_TS DATAFILE 'C:\oracle\oradata\AGENCE\agence_ts01.dbf'
+CREATE TABLESPACE AGENCE_TS DATAFILE 'C:\APP\EADARAK\ORADATA\AGENCEIMMOBILIERE\agence_ts01.dbf'
     SIZE 200M AUTOEXTEND ON NEXT 50M;
 
 -- Création de l'utilisateur
