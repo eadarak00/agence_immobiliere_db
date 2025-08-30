@@ -6,3 +6,34 @@
 
 # Compiled Pre-Linked Libraries
 *.plx
+
+# Fichiers de base de données
+*.dmp
+*.log
+*.bad
+*.ora
+
+# Fichiers temporaires
+*.tmp
+*.temp
+
+# Sauvegardes
+backups/rman_backups/
+backups/export_data/
+
+# Logs
+logs/*.log
+
+# Environnements virtuels
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Système
+.DS_Store
+Thumbs.db
