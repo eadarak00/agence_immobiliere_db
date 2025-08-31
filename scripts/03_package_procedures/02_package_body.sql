@@ -15,13 +15,13 @@ FUNCTION prix_mensuel(p_code_immeuble VARCHAR2) RETURN NUMBER IS
         
         -- Afficher des informations de débogage
         DBMS_OUTPUT.PUT_LINE('Immeuble: ' || p_code_immeuble);
-        DBMS_OUTPUT.PUT_LINE('Nombre d''appartements loués: ' || v_count);
+        DBMS_OUTPUT.PUT_LINE('Nombre d''appartements loues: ' || v_count);
         DBMS_OUTPUT.PUT_LINE('Prix total mensuel: ' || v_prix_total || ' FCFA');
         
         RETURN v_prix_total;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            DBMS_OUTPUT.PUT_LINE('Aucune location trouvée pour l''immeuble: ' || p_code_immeuble);
+            DBMS_OUTPUT.PUT_LINE('Aucune location trouvee pour l''immeuble: ' || p_code_immeuble);
             RETURN 0;
         WHEN OTHERS THEN
             DBMS_OUTPUT.PUT_LINE('Erreur dans prix_mensuel: ' || SQLERRM);
@@ -45,8 +45,8 @@ FUNCTION prix_mensuel(p_code_immeuble VARCHAR2) RETURN NUMBER IS
             INNER JOIN Louer l ON loc.Numero = l.Locataire
             INNER JOIN Appartement a ON l.Appartement = a.Numero
             WHERE l.Immeuble = p_code_immeuble
-            AND l.Debut <= SYSDATE
-            AND (l.Fin IS NULL OR l.Fin >= SYSDATE)
+            -- AND l.Debut <= SYSDATE
+            -- AND (l.Fin IS NULL OR l.Fin >= SYSDATE)
             ORDER BY loc.Nom, loc.Prenom;
         
         v_count NUMBER := 0;
@@ -58,18 +58,18 @@ FUNCTION prix_mensuel(p_code_immeuble VARCHAR2) RETURN NUMBER IS
         FOR rec IN c_locataires LOOP
             v_count := v_count + 1;
             DBMS_OUTPUT.PUT_LINE(v_count || '. ' || rec.Nom || ' ' || rec.Prenom);
-            DBMS_OUTPUT.PUT_LINE('   Numéro: ' || rec.Numero);
-            DBMS_OUTPUT.PUT_LINE('   Téléphone: ' || NVL(rec.Telephone, 'Non renseigné'));
-            DBMS_OUTPUT.PUT_LINE('   Fonction: ' || NVL(rec.Fonction, 'Non renseignée'));
-            DBMS_OUTPUT.PUT_LINE('   Appartement N°: ' || rec.Num_Appartement);
-            DBMS_OUTPUT.PUT_LINE('   Période: du ' || TO_CHAR(rec.Debut, 'DD/MM/YYYY') || 
+            DBMS_OUTPUT.PUT_LINE('   Numero: ' || rec.Numero);
+            DBMS_OUTPUT.PUT_LINE('   Telephone: ' || NVL(rec.Telephone, 'Non renseigne'));
+            DBMS_OUTPUT.PUT_LINE('   Fonction: ' || NVL(rec.Fonction, 'Non renseignee'));
+            DBMS_OUTPUT.PUT_LINE('   Appartement Num: ' || rec.Num_Appartement);
+            DBMS_OUTPUT.PUT_LINE('   Periode: du ' || TO_CHAR(rec.Debut, 'DD/MM/YYYY') || 
                                 ' au ' || NVL(TO_CHAR(rec.Fin, 'DD/MM/YYYY'), 'En cours'));
             DBMS_OUTPUT.PUT_LINE('   Loyer: ' || rec.Prix || ' FCFA/mois');
             DBMS_OUTPUT.PUT_LINE('   ---');
         END LOOP;
         
         IF v_count = 0 THEN
-            DBMS_OUTPUT.PUT_LINE('Aucun locataire trouvé pour cet immeuble.');
+            DBMS_OUTPUT.PUT_LINE('Aucun locataire trouve pour cet immeuble.');
         ELSE
             DBMS_OUTPUT.PUT_LINE('Total: ' || v_count || ' locataire(s)');
         END IF;
