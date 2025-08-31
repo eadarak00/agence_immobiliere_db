@@ -6,8 +6,8 @@ BEGIN
     job_action      => 'pkg_agence.liste_locataires',
     number_of_arguments => 1,
     start_date      => SYSTIMESTAMP,
-    -- repeat_interval => 'FREQ=DAILY; BYHOUR=12; BYMINUTE=0; BYSECOND=0',  -- chaque jour à midi
-    repeat_interval => 'FREQ=SECONDLY; INTERVAL=10',
+    repeat_interval => 'FREQ=DAILY; BYHOUR=12; BYMINUTE=0; BYSECOND=0',  -- chaque jour à midi
+    -- repeat_interval => 'FREQ=SECONDLY; INTERVAL=10',
     end_date        => NULL,
     enabled         => FALSE
   );
