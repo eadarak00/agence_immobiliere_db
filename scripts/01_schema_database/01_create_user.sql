@@ -1,0 +1,16 @@
+-- Connexion en tant que SYS
+CONNECT sys/Admin#2025 AS SYSDBA;
+
+-- Création du tablespace
+CREATE TABLESPACE AGENCE_TS DATAFILE 'C:\APP\EADARAK\ORADATA\AGENCEIMMOBILIERE\agence_ts01.dbf'
+    SIZE 200M AUTOEXTEND ON NEXT 50M;
+
+-- Création de l'utilisateur
+CREATE USER agenceimmobiliere IDENTIFIED BY agence123
+  DEFAULT TABLESPACE AGENCE_TS
+  QUOTA UNLIMITED ON AGENCE_TS;
+
+-- Attribution des privilèges
+GRANT CONNECT, RESOURCE TO agenceimmobiliere;
+GRANT CREATE VIEW, CREATE SEQUENCE, CREATE PROCEDURE, CREATE TRIGGER TO agenceimmobiliere;
+GRANT CREATE CLUSTER TO agenceimmobiliere;
