@@ -1,0 +1,12 @@
+# Démarre la base en mode MOUNT
+STARTUP MOUNT;
+
+# Restauration de la base de données
+RUN {
+    RESTORE DATABASE;
+    RECOVER DATABASE;
+}
+
+
+# Ouverture de la base avec resetlogs
+ALTER DATABASE OPEN RESETLOGS;
