@@ -1,0 +1,33 @@
+RUN {
+    # Sauvegarde complète de la base + archivelogs
+   BACKUP DATABASE PLUS ARCHIVELOG TAG='FULL_BACKUP_AGENCE';
+    
+    # Sauvegarde du spfile (paramètres d'instance)
+    BACKUP SPFILE TAG='SPFILE_BACKUP';
+    
+    # Sauvegarde du controlfile (structure de la BD)
+    BACKUP CURRENT CONTROLFILE TAG='CONTROLFILE_BACKUP';
+    
+    # Validation des sauvegardes (vérifie que les fichiers sont lisibles)
+    VALIDATE DATABASE;
+    VALIDATE ARCHIVELOG ALL;
+    
+    # Rapport sur la structure actuelle du schéma
+    REPORT SCHEMA;
+    
+    # Résumé des sauvegardes effectuées
+    LIST BACKUP SUMMARY;
+    
+    # Crosscheck des sauvegardes (vérifie l'état physique des fichiers de backup)
+    CROSSCHECK BACKUP;
+    
+    # Suppression des backups marqués "EXPIRED"
+    DELETE EXPIRED BACKUP;
+}
+
+
+-- Liste des sauvegardes de la base
+LIST BACKUP OF DATABASE SUMMARY;
+
+-- Liste des sauvegardes des archivelogs
+LIST BACKUP OF ARCHIVELOG ALL;
