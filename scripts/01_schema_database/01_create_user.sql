@@ -14,3 +14,5 @@ CREATE USER agenceimmobiliere IDENTIFIED BY agence123
 GRANT CONNECT, RESOURCE TO agenceimmobiliere;
 GRANT CREATE VIEW, CREATE SEQUENCE, CREATE PROCEDURE, CREATE TRIGGER TO agenceimmobiliere;
 GRANT CREATE CLUSTER TO agenceimmobiliere;
+GRANT CREATE JOB TO agenceimmobiliere;
+GRANT MANAGE SCHEDULER TO agenceimmobiliere;
